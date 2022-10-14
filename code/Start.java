@@ -1,59 +1,40 @@
 class Start {
     public static void main(String[] data) {
         
-        int[] a = { 8, 5, 4, 3, 7, 4, 1 };
-        Engine e = new Engine();
-        Element root = e.create(a);
+        int[] a = { 7, 3, 9, 4, 6, 2, 8 };
+        Builder b = new Builder();
+        Element root = null;
+        for (int i = 0; i < a.length; i++) {
+            root = b.insert(a[i], root);
+        }
         System.out.println(root.value);
-        int t = e.sum(root);
-        int td = e.count(root);
-        System.out.println("Total : " + t);
-        System.out.println("Total node : " + td);
-        System.out.println("Max : " + e.max(root));
+        b.print(root);
     }
 }
 
-class Engine {
+class Builder {
     
-    int max(Element e) {
-        if (e == null) return Integer.MIN_VALUE;
-        int a = max(e.left);
-        int b = max(e.right);   
-        int c = e.value;
-        if (a >= b && a >= c) return a;
-        if (b >= a && b >= c) return b;
-        return c;
+    void print(Element e) {
+        if (e == null) return;
+        print(e.left);
+        System.out.print(" " + e.value);
+        print(e.right);
     }
     
-    int count(Element e) {
-        if (e == null) return 0;
-        int result = count(e.left) + count(e.right) + 1;
-        return result;
-    }
-    
-    int sum(Element e) {
-        if (e == null) return 0;
-        return sum(e.left) + sum(e.right) + e.value;
-    }
-    
-    Element create(int ... a) {
-        return create(a, 0, a.length - 1);
-    }
-    
-    Element create(int[] a, int left, int right) {
-        if (left > right) return null;
-        int mid = (left + right) / 2;
-        Element e = new Element();
-        e.value = a[mid];
-        e.left = create(a, left, mid - 1);
-        e.right = create(a, mid + 1, right);
-        return e;
+    Element insert(int data, Element target) {
+        if (target == null) {
+            target = new Element();
+            target.value = data;
+            return target;
+        } 
+        if (data < target.value) target.left = insert(data, target.left);
+        if (data > target.value) target.right = insert(data, target.right);
+        return target;
     }
 }
 
 class Element {
     String name;
+    Element right, left;
     int value;
-    Element left;
-    Element right;
 }
