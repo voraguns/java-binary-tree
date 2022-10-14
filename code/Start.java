@@ -1,0 +1,12 @@
+class Start {
+    public static void main(String[] data) {
+        System.out.println("Hello");
+    }
+}
+
+class Element {
+    String name;
+    int value;
+    Element left;
+    Element right;
+}
