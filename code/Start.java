@@ -16,7 +16,8 @@ class Engine {
     
     int count(Element e) {
         if (e == null) return 0;
-        return 0;
+        int result = count(e.left) + count(e.right) + 1;
+        return result;
     }
     
     int sum(Element e) {
