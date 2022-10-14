@@ -9,10 +9,21 @@ class Start {
         int td = e.count(root);
         System.out.println("Total : " + t);
         System.out.println("Total node : " + td);
+        System.out.println("Max : " + e.max(root));
     }
 }
 
 class Engine {
+    
+    int max(Element e) {
+        if (e == null) return Integer.MIN_VALUE;
+        int a = max(e.left);
+        int b = max(e.right);   
+        int c = e.value;
+        if (a >= b && a >= c) return a;
+        if (b >= a && b >= c) return b;
+        return c;
+    }
     
     int count(Element e) {
         if (e == null) return 0;
